@@ -68,10 +68,15 @@ function quantityChanged(event){
 //add cart function
 function addCartClicked(event){
   var button = event.target;
-  var container= button.parentElement;
-  var title = container .getElementsByClassName("card-title").innerText;
-  var price = container .getElementsByClassName("price").innerText;
-  var productImg = container.getElementsByClassName("img-fluid")[0];
+  var container= button.closest(".card");
+  console.log({
+    event,
+    button,
+    container
+  })
+  var title = container.getElementsByClassName("card-title")[0].innerText;
+  var price = container.getElementsByClassName("price")[0].innerText;
+  var productImg = container.getElementsByClassName("img-fluid")[0].src;
   addProductToCart(title,price,productImg);
   updatetotal();
 }
@@ -88,6 +93,12 @@ function addProductToCart(title,price,productImg){
       return;
     }
   }
+
+  console.log({
+    title,
+    price,
+    productImg
+  })
 
 
   var cartBoxContent = `<img src="${productImg}" alt="" class="cart-img"/>
@@ -106,8 +117,9 @@ function addProductToCart(title,price,productImg){
   
  cartShopBox.innerHTML = cartBoxContent;
  cartItems.append(cartShopBox);
+ console.log(cartShopBox)
  cartShopBox.getElementsByClassName("cart-remove")[0]
- .addEventlistener('click',removeCartItem);
+ .addEventListener('click',removeCartItem);
   cartShopBox.getElementsByClassName("cart-quantity")[0]
  .addEventListener('change',quantityChanged);
 }
